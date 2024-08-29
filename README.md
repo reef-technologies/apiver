@@ -5,21 +5,26 @@
 
 ## Why ApiVer?
 
-ApiVer saves library users from having to cross their fingers every time they upgrade a package,
-thus encouraging them to keep it up to date while reducing the maintenance burden on the ecosystem as a whole. 
+ApiVer is a framework for library developers that helps build stable software, increases productivity, and frees developers to modernize their library's interfaces without breaking compatibility for users with every minor rename, added mandatory argument, or changed argument type.
+ApiVer also saves library users from having to cross their fingers every time they upgrade a package, thus encouraging them to keep it up to date while reducing the maintenance burden on the ecosystem as a whole. 
 
 ### Problem
 
-SemVer promises a stable API for a given major version.
-The problem is that rarely do opensource projects have the resources
-to maintain multiple major versions of their package.
-This shifts and multiplies the burden of maintenance from a package maintainer to all the users of the package.
-End users have to postpone upgrading to the latest version of a package 
-because they are afraid of the cost associated with breaking API changes.
-This leads to a situation where end users are stuck with old versions of a package,
-which may contain bugs and security vulnerabilities.
-In a world where millions of applications are built on top of thousands of packages,
-this is not sustainable and leads to wasted resources and frustration.
+[SemVer](https://semver.org) promises a stable API for a given major version.
+The problem is that rarely do opensource projects have the resources to maintain multiple major versions of their package.
+This shifts and multiplies the burden of maintenance from a package maintainer to the users of the package.
+End users often have to postpone upgrading to the latest version of a package because they are afraid of the cost associated with breaking API changes.
+
+This leads to a situation where end users are stuck with an old versions of a package, which may have:
+
+- bugs
+- security vulnerabilities
+- limited functionality
+- bad module/class/function/argument names, in the best case as designed a long time ago by someone who no longer works here
+- code which lacks the newest performance optimizations
+
+In a world where millions of applications are built on top of thousands of packages, this is not sustainable and leads to wasted resources and frustration.
+
 
 ### Solution
 
@@ -28,15 +33,18 @@ Instead of bumping the major version of your package, you can create a new API i
 To prevent having to maintain multiple major versions of your package, you provide a thin compatibility layer that translates old API to new one.
 That way old users can rest assured that their code will continue to work, while new users can take advantage of the new API.
 
+
 ## ApiVer & SemVer are complementary
 
 Even if you use ApiVer, you should still use SemVer for your releases.
 There will be times when you will need to make a breaking change - due to the limits of your programming language, or it's package distribution ecosystem.
-Thanks to ApiVer tho, you will need to bump the major version of your package much less often.
+Thanks to ApiVer though, you will need to bump the major version of your package much less often.
 
-## ApiVer Good practices
+
+## ApiVer good practices
 
 How ApiVer can be implemented highly depends on the programming language, and it's package distribution ecosystem.
+
 
 ### ApiVer for CLI
 
@@ -61,9 +69,11 @@ my-script-v1 --help
 These approaches can be combined, as it is easy to recognize the "called name" of the script.
 However, while env vars are accessible on virtually all OSes, symlinks may not be.
 
+
 ### ApiVer for Python packages
 
 Python with it's dynamic nature, and package distribution ecosystem, is a great fit for ApiVer.
+
 
 #### Suggested python package structure
 
@@ -114,7 +124,7 @@ However, the majority, who just want to use the public apiver modules (i.e., `.v
 Before you are ready to release new apiver module, you can keep it in `_` prefix, to indicate that it is not yet ready for public consumption.
 In the meatime, you can publish all compatible changes to the previous apiver modules.
 
-Flat modules for each API versions' are not requirement, but they are recommended as it makes easier to import things.
+Flat modules for each API versions' are not requirement, but they are often used as it makes easier to import things.
 To keep import time low, you may want to keep using submodules for modules that import large 3rd party libraries.
 
 
@@ -123,6 +133,7 @@ To keep import time low, you may want to keep using submodules for modules that 
 Tests are critical in any project that wants to prevent regressions.
 If you use `pytest` already or are open to using it, you will be well served by [pytest-apiver](https://github.com/reef-technologies/pytest-apiver) plugin.
 
+
 ## Projects using ApiVer
 
 ### Libraries and SDKs
@@ -130,6 +141,7 @@ If you use `pytest` already or are open to using it, you will be well served by 
 * [logfury](https://github.com/reef-technologies/logfury)
 * [django-business-metrics](https://github.com/reef-technologies/django-business-metrics)
 * your next project
+
 
 ### CLI  
 * [bt-auto-dumper](https://github.com/bactensor/bt-auto-dumper/blob/9ec42ed946086f88cdd963b1842f718b28e06071/src/bt_auto_dumper/__main__.py#L20) - CLI using Environment variable to select CLI ApiVer
